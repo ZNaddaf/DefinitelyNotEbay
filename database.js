@@ -33,8 +33,7 @@ function mainMenu() {
             ]
         }]).then(function (response) {
             if (response.action === "Post") {
-                console.log(response.action + " selected!");
-                mainMenu();
+                postItem();
             }
             else if (response.action === "Bid") {
                 console.log(response.action + " selected!");
@@ -45,4 +44,47 @@ function mainMenu() {
                 connection.end();
             }
         })
+}
+
+// Z'S CODE - POST FUNCTION
+// -------------------------------------------
+// -- Post Item Function
+// -------------------------------------------
+
+function postItem() {
+    console.log("Let's get some information about the item:")
+
+    // Inquirer Post questions Begin Here
+    inquirer.prompt(
+        [
+            {
+                type: "input",
+                name: "name",
+                message: "What is this item called?"
+            },
+            {
+                type: "input",
+                name: "section",
+                message: "What type of item is this?"
+            },
+            {
+                type: "input",
+                name: "bid",
+                message: "What is the price of this item?"
+            },
+        ]
+
+        // Function to Create Post based on answers        
+    ).then(function (data) {
+        console.log("Creating a new Post...\n");
+        var query = connection.query(
+            "INSERT INTO posts SET ?",
+            data,
+            function (err, res) {
+                if (err) throw err;
+                console.log(res.affectedRows + "Post created!\n");
+                mainMenu();
+            }
+        );
+    });
 }
