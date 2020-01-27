@@ -34,7 +34,12 @@
 
 NPMs:
     Inquirer
-    
+
+    Prompts: Post or Bid - Post - Item Information
+
+    - Bid
+        - Choose Item
+            - Place Bid
 
 Operation:
     Post on an item
@@ -60,3 +65,32 @@ great_bay_db:
                 4. bid
 
 
+Prompts: Post or Bid
+    - Post
+        - Item Information
+
+    - Bid
+        - Choose Item
+            - Place Bid
+
+Operation:
+
+Post on an item
+    - Information about the item (name, price)
+
+Bid on an item
+    - Show all available items
+        - Select an item to bid on
+            - How much to bid
+                - Compare to highest
+                    If higher: Success
+                    If lower: Rejected
+                        - go back to bid screen
+
+Schema:
+    table: Posts
+        columns
+            1. id
+            2. name
+            3. section
+            4. bid
