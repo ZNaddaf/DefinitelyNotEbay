@@ -10,7 +10,6 @@ CREATE TABLE posts(
   bid DECIMAL NOT NULL
 );
 
-INSERT INTO posts (name, section, bid)
-VALUES ("Haunted Doll", ""
+INSERT INTO posts (name, section, bid) VALUES ("Haunted Doll", "Toys", 30);
 
 SELECT * FROM posts;
