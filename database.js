@@ -37,7 +37,7 @@ function mainMenu() {
             }
             else if (response.action === "Bid") {
                 console.log(response.action + " selected!");
-                mainMenu();
+                bidItem();
             }
             else if (response.action === "Exit") {
                 console.log("Later!");
@@ -87,4 +87,42 @@ function postItem() {
             }
         );
     });
+}
+
+function bidItem() {
+    connection.query("SELECT * FROM posts", function(err, res) {
+        const items = res; // Store the list of all items for the question
+        inquirer.prompt(
+            [
+                {
+                    type: "list",
+                    name: "name",
+                    message: "What item do you want to bid on?",
+                    choices: items,
+                },
+                {
+                    type: "input",
+                    name: "bid",
+                    message: "How much do you want to bid?"
+                }
+            ]
+        ).then(function (data) {
+            // data is the response object containing data.name and data.bid
+            // See if we can update the database
+            var query = connection.query(
+                `UPDATE posts SET bid = ${data.bid} WHERE name = "${data.name}" AND bid < ${data.bid}`, function (err, res) {
+                    if (err) throw err;
+
+                    const rowsUpdated = res.affectedRows; // Get the # of rows updated
+                    if (rowsUpdated > 0) {
+                        console.log("Congratulations - Your bid went through!");
+                    } else {
+                        console.log("SORRY - Your bid was too low!");
+                    }
+                    
+                    mainMenu();
+                }
+            );
+        });
+    });   
 }
