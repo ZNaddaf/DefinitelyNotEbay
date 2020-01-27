@@ -34,4 +34,3 @@ function mainMenu() {
             console.log(response.action + " selected!");
         })
 }
-
