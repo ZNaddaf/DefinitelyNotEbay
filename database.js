@@ -1,6 +1,8 @@
 require("dotenv").config();
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+// let post = require("./post.js");
+// let bid = require("./bid.js")
 
 
 const connection = mysql.createConnection({
@@ -16,7 +18,6 @@ connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadID);
     mainMenu();
-    connection.end();
 })
 
 function mainMenu() {
@@ -31,6 +32,17 @@ function mainMenu() {
                 "Exit"
             ]
         }]).then(function (response) {
-            console.log(response.action + " selected!");
+            if (response.action === "Post") {
+                console.log(response.action + " selected!");
+                mainMenu();
+            }
+            else if (response.action === "Bid") {
+                console.log(response.action + " selected!");
+                mainMenu();
+            }
+            else if (response.action === "Exit") {
+                console.log("Later!");
+                connection.end();
+            }
         })
 }
